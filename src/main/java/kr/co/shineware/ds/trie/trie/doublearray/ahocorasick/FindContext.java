@@ -1,6 +1,17 @@
 package kr.co.shineware.ds.trie.trie.doublearray.ahocorasick;
 
 public class FindContext {
+
+    private String text;
+
+    public FindContext(String text){
+        this.setText(text);
+    }
+
+    public FindContext(){
+
+    }
+
     public int getCurrentState() {
         return currentState;
     }
@@ -20,4 +31,12 @@ public class FindContext {
     }
 
     private int position = 1;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }

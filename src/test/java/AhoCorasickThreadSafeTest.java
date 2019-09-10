@@ -1,4 +1,5 @@
 import kr.co.shineware.ds.trie.trie.doublearray.ahocorasick.AhoCorasickDoubleArrayTrie;
+import kr.co.shineware.ds.trie.trie.doublearray.ahocorasick.FindContext;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -9,7 +10,6 @@ import java.util.concurrent.*;
 
 import static org.junit.Assert.assertEquals;
 
-@Ignore
 public class AhoCorasickThreadSafeTest {
     private static ExecutorService service;
     private static final int THREAD_NUM = 4;

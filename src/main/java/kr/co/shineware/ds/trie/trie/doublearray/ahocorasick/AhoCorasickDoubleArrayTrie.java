@@ -91,13 +91,36 @@ public class AhoCorasickDoubleArrayTrie<V> implements Serializable {
         return collectedEmits;
     }
 
-    public List<Hit<V>> get(char jaso, FindContext findContext) {
-        return this.parseText(jaso, findContext);
+    public Map<String, V> get(FindContext findContext, char jaso) {
+
+        Map<String, V> result = new HashMap<>();
+        List<Hit<V>> collectedEmits = new ArrayList<>();
+        findContext.setCurrentState(getState(findContext.getCurrentState(), jaso));
+        storeEmits(findContext.getPosition(), findContext.getCurrentState(), collectedEmits);
+        findContext.setPosition(findContext.getPosition() + 1);
+
+        for (Hit<V> collectedEmit : collectedEmits) {
+            String key = findContext.getText().substring(collectedEmit.begin, collectedEmit.end);
+            result.put(key, collectedEmit.value);
+        }
+
+        return result;
     }
 
-    public List<Hit<V>> get(char jaso) {
-        return this.get(jaso, new FindContext());
+    public Map<String, V> get(FindContext context, char[] keys) {
+        final Map<String, V> resultMap = new HashMap<>();
+
+        for (int i = 0; i < keys.length; i++) {
+            resultMap.putAll(get(context, keys[i]));
+        }
+        return resultMap;
     }
+
+    public Map<String, V> get(String key){
+        return this.get(new FindContext(key), key.toCharArray());
+    }
+
+
 
     /**
      * Parse text
@@ -254,21 +277,6 @@ public class AhoCorasickDoubleArrayTrie<V> implements Serializable {
         output = (int[][]) in.readObject();
         l = (int[]) in.readObject();
         v = (V[]) in.readObject();
-    }
-
-    /**
-     * Get value by a String key, just like a map.get() method
-     *
-     * @param key The key
-     * @return
-     */
-    public V get(String key) {
-        int index = exactMatchSearch(key);
-        if (index >= 0) {
-            return v[index];
-        }
-
-        return null;
     }
 
     /**

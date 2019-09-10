@@ -35,11 +35,12 @@ public class AhoCorasickDoubleArrayKomoranTest {
         }
 
         FindContext findContext = new FindContext();
+        findContext.setText(text);
 
         for (char c : text.toCharArray()) {
-            List<Hit<String>> result = acdat.parseText(c, findContext);
-            for (Hit<String> stringHit : result) {
-                System.out.println("Found with "+c+" : " + stringHit);
+            Map<String, String> result = acdat.get(findContext, c);
+            for (String key : result.keySet()) {
+                System.out.println("Found with "+c+"="+key + " : " + result.get(key));
             }
             System.out.println();
         }
