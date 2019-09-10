@@ -83,14 +83,6 @@ public class AhoCorasickDoubleArrayTrie<V> implements Serializable {
         return collectedEmits;
     }
 
-    public List<Hit<V>> parseText(char jaso, FindContext findContext) {
-        List<Hit<V>> collectedEmits = new ArrayList<>();
-        findContext.setCurrentState(getState(findContext.getCurrentState(), jaso));
-        storeEmits(findContext.getPosition(), findContext.getCurrentState(), collectedEmits);
-        findContext.setPosition(findContext.getPosition() + 1);
-        return collectedEmits;
-    }
-
     public Map<String, V> get(FindContext findContext, char jaso) {
 
         Map<String, V> result = new HashMap<>();
@@ -116,10 +108,27 @@ public class AhoCorasickDoubleArrayTrie<V> implements Serializable {
         return resultMap;
     }
 
-    public Map<String, V> get(String key){
+    public Map<String, V> get(String key) {
         return this.get(new FindContext(key), key.toCharArray());
     }
 
+    public V getValue(String key) {
+
+        int index = exactMatchSearch(key);
+        if (index >= 0)
+        {
+            return v[index];
+        }
+
+        return null;
+
+//        Map<String, V> keyValueMap = this.get(key);
+//        V value = keyValueMap.get(key);
+//        if (value != null) {
+//            return value;
+//        }
+//        return null;
+    }
 
 
     /**

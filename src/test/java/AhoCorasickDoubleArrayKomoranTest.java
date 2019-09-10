@@ -10,6 +10,27 @@ import java.util.Map;
 public class AhoCorasickDoubleArrayKomoranTest {
 
     @Test
+    public void getValueTest(){
+        Map<String, String> map = new HashMap<>();
+        String[] keyArray = new String[]
+                {
+                        "hers",
+                        "his",
+                        "she",
+                        "he"
+                };
+        for (String key : keyArray) {
+            map.put(key, key+"!!!");
+        }
+        // Build an AhoCorasickDoubleArrayTrie
+        AhoCorasickDoubleArrayTrie<String> acdat = new AhoCorasickDoubleArrayTrie<>();
+        acdat.build(map);
+
+        System.out.println(acdat.getValue("sh"));
+        System.out.println(acdat.getValue("her"));
+    }
+
+    @Test
     public void tempTest() {
         // Collect test data set
         Map<String, String> map = new HashMap<>();
